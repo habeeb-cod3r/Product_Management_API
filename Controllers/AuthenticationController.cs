@@ -16,15 +16,18 @@ namespace Product_Management_API.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
 
         public AuthenticationController(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
+            SignInManager<IdentityUser> signInManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
             _configuration = configuration;
         }
 
@@ -34,7 +37,8 @@ namespace Product_Management_API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password)
+                && (await _signInManager.PasswordSignInAsync(user, model.Password, false, false)).Succeeded)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -118,12 +122,19 @@ namespace Product_Management_API.Controllers
             }
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
-        //Login
+        //Logout
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout()
         {
-           
+            await _signInManager.SignOutAsync();
+            var response = new Response
+            {
+                Message = "Logout successful!",
+                Status = "Success"
+            };
+            return Ok(response);
+
         }
 
 
