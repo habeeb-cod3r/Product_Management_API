@@ -118,6 +118,14 @@ namespace Product_Management_API.Controllers
             }
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
+        //Login
+        [HttpPost]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+           
+        }
+
 
         //Generating Token
         private JwtSecurityToken GetToken(List<Claim> authClaims)

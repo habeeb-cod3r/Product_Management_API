@@ -18,6 +18,7 @@ namespace Product_Management_API.Controllers
 
         }
 
+        //Route to get all products
         [HttpGet("")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -25,6 +26,7 @@ namespace Product_Management_API.Controllers
             return Ok(products);
         }
 
+        //Route to get a specific product by ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
@@ -36,6 +38,7 @@ namespace Product_Management_API.Controllers
             return Ok(product);
         }
 
+        //Route to create a new product
         [HttpPost("")]
         public async Task<IActionResult> AddNewProduct([FromBody]ProductModel productModel)
         {
@@ -46,6 +49,7 @@ namespace Product_Management_API.Controllers
             }, id);
         }
 
+        //Route to update a product
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductModel productModel, [FromRoute]int id)
         {
@@ -53,12 +57,15 @@ namespace Product_Management_API.Controllers
             return Ok();
         }
 
+        //Route to update specific information of a product
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateProductPatch([FromBody] JsonPatchDocument productModel, [FromRoute] int id)
         {
             await _productRepository.UpdateProductPatchAsync(id, productModel);
             return Ok();
         }
+
+        //Route to delete a product
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
