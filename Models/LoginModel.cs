@@ -2,7 +2,7 @@
 
 namespace Product_Management_API.Models
 {
-    public class LoginModel
+    public record LoginModel
     {
         [Required(ErrorMessage = "User Email is required")]
         [EmailAddress]

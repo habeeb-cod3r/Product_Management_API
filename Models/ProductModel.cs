@@ -1,6 +1,6 @@
 ﻿namespace Product_Management_API.Models
 {
-    public class ProductModel
+    public record ProductModel
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

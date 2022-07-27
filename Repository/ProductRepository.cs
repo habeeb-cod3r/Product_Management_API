@@ -23,19 +23,7 @@ namespace Product_Management_API.Repository
         }
 
         public async Task<ProductModel> GetProductByIdAsync(int productId)
-        {
-            /*var record = await _context.Products.Where(x => x.Id == ProductId).Select(x => new ProductModel()
-            {
-                Id = x.Id,
-                ProductName = x.ProductName,
-                Price = x.Price,
-                isDisabled = x.isDisabled,
-                isDeleted = x.isDeleted,
-                CreatedDate = x.CreatedDate
-            }).FirstOrDefaultAsync();
-
-            return record;*/
-
+        { 
             var product = await _context.Products.FindAsync(productId);
             return _mapper.Map<ProductModel>(product);
         }
@@ -56,17 +44,7 @@ namespace Product_Management_API.Repository
         }
 
         public async Task UpdateProductAsync(int productId, ProductModel productModel)
-        {
-            /*var product = await _context.Products.FindAsync(productId);
-            if (product != null)
-            {
-                product.ProductName = productModel.ProductName;
-                product.Price = productModel.Price;
-                product.isDeleted = productModel.isDeleted;
-                product.isDisabled = productModel.isDisabled;
-
-                await _context.SaveChangesAsync();
-            }*/
+        {       
             var product = new Product()
             {
                 Id = productId,

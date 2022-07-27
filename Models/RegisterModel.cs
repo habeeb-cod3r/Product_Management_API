@@ -2,7 +2,7 @@
 
 namespace Product_Management_API.Models
 {
-    public class RegisterModel
+    public record RegisterModel
     {
         [Required(ErrorMessage = "User Name is required")]
         public string? Username { get; set; }

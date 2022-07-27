@@ -8,8 +8,6 @@ namespace Product_Management_API.Helpers
     public class ApplicationMapper : Profile
     {
         public ApplicationMapper()
-        {
-            CreateMap<Product, ProductModel>().ReverseMap();
-        }
+        { CreateMap<Product, ProductModel>().ReverseMap(); }
     }
 }
