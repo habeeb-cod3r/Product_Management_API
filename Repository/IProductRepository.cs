@@ -11,5 +11,6 @@ namespace Product_Management_API.Repository
         Task UpdateProductAsync(int productId, ProductModel productModel);
         Task UpdateProductPatchAsync(int productId, JsonPatchDocument productModel);
         Task DeleteProductAsync(int productId);
+        Task<List<ProductModel>> GetAllDisabledProductsAsync();
     }
 }

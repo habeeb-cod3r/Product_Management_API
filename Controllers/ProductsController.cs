@@ -6,7 +6,7 @@ using Product_Management_API.Repository;
 
 namespace Product_Management_API.Controllers
 {
-    [Authorize(Roles = UserRoles.Admin)]
+    //[Authorize(Roles = UserRoles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -71,6 +71,15 @@ namespace Product_Management_API.Controllers
         {
             await _productRepository.DeleteProductAsync(id);
             return Ok();
+        }
+       
+        [HttpGet]
+        [Route("disabled")]
+        public async Task<IActionResult> GetDisabledProducts()
+        {
+            var disabledProducts = await _productRepository.GetAllDisabledProductsAsync();
+            return Ok(disabledProducts);
+
         }
     }
 }
