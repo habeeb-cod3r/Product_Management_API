@@ -13,17 +13,14 @@ ConfigurationManager configuration = builder.Configuration;
 
 //For Entity Framework
 builder.Services.AddDbContext<ProductDbContext>(
-    options => options.UseSqlServer(configuration.GetConnectionString("conn")));
-
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer(configuration.GetConnectionString("conn")));
+    options => options.UseSqlServer(configuration.GetConnectionString("Conn")));
 
 //For Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
 })
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddEntityFrameworkStores<ProductDbContext>()
     .AddDefaultTokenProviders();
 
 //Adding Authentication

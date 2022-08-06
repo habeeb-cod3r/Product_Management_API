@@ -6,7 +6,6 @@ using Product_Management_API.Repository;
 
 namespace Product_Management_API.Controllers
 {
-    //[Authorize(Roles = UserRoles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -15,7 +14,6 @@ namespace Product_Management_API.Controllers
         public ProductsController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
-
         }
 
         //Route to get all products
@@ -65,6 +63,7 @@ namespace Product_Management_API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         //Route to delete a product
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int id)
@@ -72,14 +71,24 @@ namespace Product_Management_API.Controllers
             await _productRepository.DeleteProductAsync(id);
             return Ok();
         }
-       
+
+        //Route to view disabled products
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpGet]
-        [Route("disabled")]
+        [Route("disabled-products")]
         public async Task<IActionResult> GetDisabledProducts()
         {
             var disabledProducts = await _productRepository.GetAllDisabledProductsAsync();
             return Ok(disabledProducts);
+        }
 
+        //route to get the sum of products since last week
+        [HttpGet]
+        [Route("get-sum")]
+        public async Task<IActionResult> GetSumOfProducts()
+        {
+            var SumOfProductsWithinOneWeek = await _productRepository.GetSumOfProductsWithinOneWeekAsync();
+            return Ok(SumOfProductsWithinOneWeek);
         }
     }
 }

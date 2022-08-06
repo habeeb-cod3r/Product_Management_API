@@ -11,7 +11,7 @@ using Product_Management_API.Data;
 
 namespace Product_Management_API.Migrations.ApplicationDb
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ProductDbContext))]
     [Migration("20220725134003_init_auth")]
     partial class init_auth
     {

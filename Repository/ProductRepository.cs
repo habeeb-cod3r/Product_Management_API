@@ -12,11 +12,13 @@ namespace Product_Management_API.Repository
         private readonly ProductDbContext _context;
         private readonly IMapper _mapper;
 
+        //ProductRepository Constructor
         public ProductRepository(ProductDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+        
         public async Task<List<ProductModel>> GetAllProductsAsync()
         {
             var records = await _context.Products.ToListAsync();
@@ -34,8 +36,8 @@ namespace Product_Management_API.Repository
             {
                 ProductName = productModel.ProductName,
                 Price = productModel.Price,
-                IsDisabled = productModel.isDisabled,
-                IsDeleted = productModel.isDeleted,
+                IsDisabled = productModel.IsDisabled,
+                IsDeleted = productModel.IsDeleted,
                 CreatedDate = DateTimeOffset.UtcNow
             };
             _context.Products.Add(product);
@@ -51,8 +53,8 @@ namespace Product_Management_API.Repository
                 Id = productId,
                 ProductName = productModel.ProductName,
                 Price = productModel.Price,
-                IsDisabled = productModel.isDisabled,
-                IsDeleted = productModel.isDeleted,
+                IsDisabled = productModel.IsDisabled,
+                IsDeleted = productModel.IsDeleted,
             };
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
@@ -85,18 +87,16 @@ namespace Product_Management_API.Repository
             return _mapper.Map<List<ProductModel>>(disabledRecords);
         }
 
-        /*public IQueryable<ProductModel> GetDisableProduct()
+        public async Task<decimal> GetSumOfProductsWithinOneWeekAsync()
         {
-            return _context.Products.AsQueryable();
+            var SumOfProductsWithinOneWeek = 0.0m;
+            var ProductsWithinOneWeek = await _context.Products
+                .Where(x => x.CreatedDate >= DateTimeOffset.Now.AddDays(-7)).ToListAsync();
+            foreach (var product in ProductsWithinOneWeek)
+            {
+                SumOfProductsWithinOneWeek += product.Price;
+            }
+            return SumOfProductsWithinOneWeek;
         }
-        public async Task<List<ProductModel>> GetAllDisabledProductsAsync(bool isDisabled)
-        {
-            //var disabledRecords = new Product() { IsDisa/*bled = isDisabled };
-            var disabledRecords =  GetDisableProduct().Where(e => e.IsDisabled == true).ToListAsync();
-            return await disabledRecords; ;*/
-
-            
-
-        //}
     }
 }

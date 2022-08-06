@@ -137,7 +137,6 @@ namespace Product_Management_API.Controllers
 
         }
 
-
         //Generating Token
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
